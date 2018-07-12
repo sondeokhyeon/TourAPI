@@ -74,6 +74,9 @@
 			ul .nav {
 				background-color: #e2e2e2	;
 			}
+			#fh5co-page {
+				overflow: visible;
+			}
 
 			.fh5co-narrow-content .areaLists {
 				display: flex;
@@ -82,22 +85,40 @@
 				border-bottom : 1px solid #b9b9b9;
 				border-top : 1px solid #b9b9b9;
 				margin-bottom : 10px;
+				overflow: hidden;
+				background-color: #ffffff;
+				z-index: 99999;
+				top: 0px;
+				position:sticky;
+				align-self: flex-start;
+				
 			}
 
 			.areaLists .areaCodes {
 				color: inherit;
 			}
 
+			.fh5co-nav-toggle{
+				position: fixed;
+				top: 96.8%;
+				background-color: #fff;
+				padding: 0px 0px 5px 15px;
+				width: 100%;
+				height: 100px;
+				border-top: 1px solid #a7a7a7;
+			}
+
+
 	</style>
 
 </head>
 
 <body>
-
+	<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle">
+		<i></i>
+	</a>
 	<div id="fh5co-page">
-		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle">
-			<i></i>
-		</a>
+		
 		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
 
 			<h1 id="fh5co-logo">
@@ -138,15 +159,15 @@
 				<h2 class="animate-box" data-animate-effect="fadeInLeft">
 					추천 여행코스
 				</h2>
-				<div class="areaLists">
-						| <a href="javascript:void()" class="areaCodes">서울</a> |
-						<a href="javascript:void()" class="areaCodes">경기도</a> |
-						<a href="javascript:void()" class="areaCodes">강원도</a> |
-						<a href="javascript:void()" class="areaCodes">충정도</a> |
-						<a href="javascript:void()" class="areaCodes">경상도</a> |
-						<a href="javascript:void()" class="areaCodes">전라도</a> |
-						<a href="javascript:void()" class="areaCodes">제주도</a> |
-					</div>
+					<nav class="areaLists" id="sibal_sticky">
+							| <a href="javascript:void()" class="areaCodes">서울</a> |
+							<a href="javascript:void()" class="areaCodes">경기도</a> |
+							<a href="javascript:void()" class="areaCodes">강원도</a> |
+							<a href="javascript:void()" class="areaCodes">충정도</a> |
+							<a href="javascript:void()" class="areaCodes">경상도</a> |
+							<a href="javascript:void()" class="areaCodes">전라도</a> |
+							<a href="javascript:void()" class="areaCodes">제주도</a> |
+					</nav>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
 					<!-- 컨텐츠영역 -->
 				</div>
@@ -223,6 +244,7 @@
 		draw.elements();
 	}
 	</script>
+
 </body>
 
 </html>
