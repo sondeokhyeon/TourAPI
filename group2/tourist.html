@@ -103,6 +103,39 @@
 				font-size: 15px;
 				color: black;
 			}
+			#fh5co-page {
+				overflow: visible;
+			}
+
+			.fh5co-narrow-content .areaLists {
+				display: flex;
+				justify-content: space-between;
+				padding : 5px 15px 5px 15px; 
+				border-bottom : 1px solid #b9b9b9;
+				border-top : 1px solid #b9b9b9;
+				margin-bottom : 10px;
+				overflow: hidden;
+				background-color: #ffffff;
+				z-index: 99999;
+				top: 0px;
+				position:sticky;
+				align-self: flex-start;
+				
+			}
+
+			.areaLists .areaCodes {
+				color: inherit;
+			}
+
+			.fh5co-nav-toggle{
+				position: fixed;
+				top: 96.8%;
+				background-color: #fff;
+				padding: 0px 0px 5px 15px;
+				width: 100%;
+				height: 100px;
+				border-top: 1px solid #a7a7a7;
+			}
 
 	</style>
 
@@ -154,6 +187,15 @@
 				<h2 class="animate-box" data-animate-effect="fadeInLeft">
 					관광지
 				</h2>
+				<nav class="areaLists" id="sibal_sticky">
+						| <a href="javascript:void()" class="areaCodes">서울</a> |
+						<a href="javascript:void()" class="areaCodes">경기도</a> |
+						<a href="javascript:void()" class="areaCodes">강원도</a> |
+						<a href="javascript:void()" class="areaCodes">충정도</a> |
+						<a href="javascript:void()" class="areaCodes">경상도</a> |
+						<a href="javascript:void()" class="areaCodes">전라도</a> |
+						<a href="javascript:void()" class="areaCodes">제주도</a> |
+				</nav>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
 					
 				</div>

@@ -64,8 +64,7 @@
 			}
 
 			.img-responsive{		
-				min-width:100px;
-				min-height: 150px;
+				height: 150px !important;
 			}
 			.thumbnail{
    				min-height: 310px;
@@ -127,6 +126,7 @@
 				</h2>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
 				</div>
+				<div class="text-right"><a href="javascript:void(0)" onclick="moreView()">더보기</a></div>
 			</div>
 		</div>
 	</div>
@@ -153,7 +153,9 @@
 	<script>
 		$(function () {
 			common.leftMenuImport();
-			common.getInfo('get', 'areaBasedList', "contentTypeId=32&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=12&pageNo=1", parsing.dataParsing);
+			// common.getInfo('get', 'areaBasedList', "contentTypeId=32&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=12&pageNo=1", parsing.dataParsing);
+			draw.init();
+			draw.elements();
 		})
 
 	var parsing = { 
@@ -167,7 +169,7 @@
 					"<div class='col-xs-12 col-sm-12 col-md-4 col-lg-3'>"
 				+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + ">"		
 				+	"<div class='thumbnail'>"
-				+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "alt='이미지가 없습니다'>"
+				+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
 				+			"<div class='caption text-center'>"
 				+					"<h5>"+ item.title +"</h5>"
 				+					"<h6>"+ item.addr1 + "</h6>"
@@ -179,6 +181,25 @@
        		 })
 		}
 	}
+
+	var draw = {
+		elementCount : $,
+
+		init     : function() {
+			this.elementCount = 1;
+		},
+
+		elements : function() {
+			console.log(this.elementCount)
+			common.getInfo('get', 'areaBasedList', "contentTypeId=32&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=24&pageNo=" + this.elementCount , parsing.dataParsing);
+		}
+	}
+	
+	function moreView() {
+		draw.elementCount += 1;
+		draw.elements();
+	}
+
 	</script>
 </body>
 
