@@ -44,6 +44,8 @@
 	<link rel="stylesheet" href="../css/owl.theme.default.min.css">
 	<!-- Theme style  -->
 	<link rel="stylesheet" href="../css/style.css">
+	<!-- custom common css-->
+	<link rel="stylesheet" href="../css/customused.css">
 
 	<!-- Modernizr JS -->
 	<script src="../js/modernizr-2.6.2.min.js"></script>
@@ -51,106 +53,6 @@
 	<!--[if lt IE 9]>
 	<script src="../js/respond.min.js"></script>
 	<![endif]-->
-
-    <style>
-			
-			.work-item {
-				box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-				transition: 0.3s;
-			}
-	
-			.card__contents {
-				padding: 2px 16px 20px;
-			}
-
-			.img-responsive{		
-				height: 112px !important;
-			}
-			.thumbnail{
-   				min-height: 310px;
-			}
-
-			ul .nav {
-				background-color: #e2e2e2	;
-			}
-
-			.row > ul > li {
-				list-style: none;
-				display: flex;
-				flex-wrap: wrap;
-				border-bottom : 1px solid #c3c3c3;
-				align-items: center;
-				align-content: space-between;
-			}
-			.row > ul > li > .selectChek  {
-				display: none;
-			}
-			.row > ul > li > a  {
-				margin-top: 8px !important;
-			}
-			.row > ul > li > a > img {
-				float: left;
-				min-height: 126px;
-				margin-right: 10px;
-				background-color: #f9f9f9;
-				text-align: center;
-				vertical-align: middle;
-				width:300px;
-				height:200px;
-			}
-			.row > ul > li > a > dl {
-				margin: 30px 13px 15px 10px;
-				font-size: 15px;
-				color: black;
-			}
-
-			ul .nav {
-				background-color: #e2e2e2	;
-			}
-
-			#fh5co-page {
-				overflow: visible;
-			}
-
-			.fh5co-narrow-content .areaLists {
-				display: flex;
-				padding : 5px 15px 5px 15px; 
-				margin-bottom : 10px;
-				background-color: #ffffff;
-				z-index: 99999;
-				top: 0px;
-				position:sticky;
-				position: -webkit-sticky;
-				flex-wrap: wrap;	
-			}
-
-			.areaLists .areaList {
-				display: flex;
-				justify-content: space-between;
-				flex-wrap: wrap;
-				width: 100%;
-				border-bottom : 1px solid #b9b9b9;
-				border-top : 1px solid #b9b9b9;
-				margin-top : 1px;
-			}
-
-			.areaLists .areaCodes {
-				color: inherit;
-				width: 14%;
-				text-align: center;
-			}
-
-			.fh5co-nav-toggle{
-				position: fixed;
-				top: 96.8%;
-				background-color: #fff;
-				padding: 0px 0px 5px 15px;
-				width: 100%;
-				height: 100px;
-				border-top: 1px solid #a7a7a7;
-			}
-
-	</style>
 
 </head>
 
@@ -201,23 +103,24 @@
 					관광지
 				</h2>
 					<nav class="areaLists">
-						<div class="areaList">
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="1">서울</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="2">인천</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="3">대전</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="4">대구</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="5">광주</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="6">부산</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="7">울산</a> 
-						</div>
-						<div class="areaList">
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="31">경기도</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="32">강원도</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="35">경북</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="36">경남</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="37">전북</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="38">전남</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="39">제주도</a>  
+						<ul class="areaList">
+							<li class="areaCodes" data-toggle="1">서울</li> 
+							<li class="areaCodes" data-toggle="2">인천</li> 
+							<li class="areaCodes" data-toggle="3">대전</li> 
+							<li class="areaCodes" data-toggle="4">대구</li> 
+							<li class="areaCodes" data-toggle="5">광주</li> 
+							<li class="areaCodes" data-toggle="6">부산</li> 
+							<li class="areaCodes" data-toggle="7">울산</li> 
+							<li class="areaCodes" data-toggle="31">경기도</li> 
+							<li class="areaCodes" data-toggle="32">강원도</li> 
+							<li class="areaCodes" data-toggle="35">경북</li> 
+							<li class="areaCodes" data-toggle="36">경남</li> 
+							<li class="areaCodes" data-toggle="37">전북</li> 
+							<li class="areaCodes" data-toggle="38">전남</li> 
+							<li class="areaCodes" data-toggle="39">제주도</li>
+						</ul>
+						<div class="detailArea">
+  
 						</div>
 					</nav>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
@@ -263,7 +166,6 @@
 			console.log(data)
 		},
 		dataParsing: function (data) {
-			console.log(data)
 			var list = data.response.body.items.item
 			if (list != undefined ) {
 				$.each(list, function (i, item) {
