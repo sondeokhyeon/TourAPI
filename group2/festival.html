@@ -92,7 +92,6 @@
 									<li><a href="../group4/accommodation.html">숙박업소정보</a></li>
 								</ul>
 							</div>
-					 
 					</ul>
 			</nav>
 		</aside>
@@ -102,26 +101,40 @@
 				<h2 class="animate-box" data-animate-effect="fadeInLeft">
 					<span id="festivalMonth"></span>월 현재 진행중인 축제정보
 				</h2>
-					<nav class="areaLists">
-						<ul class="areaList">
+				<nav class="areaLists">
+						<span class="area">대지역</span>
+						<span class="sigungu">시군구</span>
+					<ul class="areaList" style="display:flex; justify-content:space-between; list-style:none; padding-left: 0;z-index: 100002; visibility: hidden; background-color: white;">
+						<div id="hiddenMenu">	
 							<li class="areaCodes" data-toggle="1">서울</li> 
-							<li class="areaCodes" data-toggle="2">인천</li> 
-							<li class="areaCodes" data-toggle="3">대전</li> 
-							<li class="areaCodes" data-toggle="4">대구</li> 
-							<li class="areaCodes" data-toggle="5">광주</li> 
-							<li class="areaCodes" data-toggle="6">부산</li> 
-							<li class="areaCodes" data-toggle="7">울산</li> 
-							<li class="areaCodes" data-toggle="8">세종시</li> 
-							<li class="areaCodes" data-toggle="31">경기도</li> 
-							<li class="areaCodes" data-toggle="32">강원도</li>
-							<li class="areaCodes" data-toggle="33">충북</li> 
-							<li class="areaCodes" data-toggle="34">충남</li>  
-							<li class="areaCodes" data-toggle="35">경북</li> 
-							<li class="areaCodes" data-toggle="36">경남</li> 
-							<li class="areaCodes" data-toggle="37">전북</li> 
-							<li class="areaCodes" data-toggle="38">전남</li> 
-							<li class="areaCodes" data-toggle="39">제주도</li>
-						</ul>
+							<li class="areaCodes" data-toggle="2">울산</li> 
+							<li class="areaCodes" data-toggle="3">경북</li> 
+						</div>
+						<div id="hiddenMenu">	
+							<li class="areaCodes" data-toggle="1">인천</li> 
+							<li class="areaCodes" data-toggle="2">세종시</li> 
+							<li class="areaCodes" data-toggle="3">경남</li> 
+						</div>
+						<div id="hiddenMenu">	
+							<li class="areaCodes" data-toggle="1">대전</li> 
+							<li class="areaCodes" data-toggle="2">경기도</li> 
+							<li class="areaCodes" data-toggle="3">전북</li> 
+						</div>
+						<div id="hiddenMenu">	
+							<li class="areaCodes" data-toggle="1">대구</li> 
+							<li class="areaCodes" data-toggle="2">강원도</li> 
+							<li class="areaCodes" data-toggle="3">전남</li> 
+						</div>
+						<div id="hiddenMenu">	
+							<li class="areaCodes" data-toggle="1">광주</li> 
+							<li class="areaCodes" data-toggle="2">충북</li> 
+							<li class="areaCodes" data-toggle="3">제주도</li> 
+						</div>
+						<div id="hiddenMenu">	
+							<li class="areaCodes" data-toggle="1">부산</li> 
+							<li class="areaCodes" data-toggle="2">충남</li> 
+						</div>
+					</ul>
 						<ul class="sigunguLists">
 
 						</ul>
@@ -158,9 +171,17 @@
 			common.getMonth();
 			draw.areaChange();
 			draw.init();
-			draw.areaSigunguCodeGet();
+			// draw.areaSigunguCodeGet(); 
 			draw.sigunguChange();
 			draw.elements();
+			$(".area").hover(function() {
+				$(".areaList").css('visibility','visible')
+				$(".areaList").css('display','flex')
+			}, function() {
+				$(".areaList").css('visibility','hidden')
+			}) 
+
+
 		})
 		var parsing = { 
 		test:function(data) {
@@ -275,6 +296,14 @@
 		draw.elementCount += 1;
 		draw.elements();
 	}
+
+	function areaHoverView() {
+		$(".areaLists").hover(function() {
+			$(".areaList").css('display','flex')
+		}) 
+
+	}
+
 
 	</script>
 </body>
