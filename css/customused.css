@@ -60,7 +60,8 @@
 				text-align: center;
 				list-style: none;
 				float: left;
-				margin-left: 50px;
+				margin-left: 40px;
+				width : 53px;
 				cursor: pointer;
 			}
 
@@ -86,7 +87,7 @@
 				text-align: center;
 				list-style: none;
 				float: left;
-				margin-left: 50px;
+				margin-left: 41px;
 				cursor: pointer;
 			}
 

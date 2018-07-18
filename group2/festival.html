@@ -169,24 +169,43 @@
 		dataParsing: function (data) {
 			var list = data.response.body.items.item
 			console.log(list)
-			if (list != undefined ) {
-				$.each(list, function (i, item) {
-					var infoElements =
-						"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
-					+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + " target='_blank'>"		
-					+	"<div class='thumbnail'>"
-					+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
-					+			"<div class='caption text-center'>"
-					+					"<h5>"+ item.title +"</h5>"
-					+					"<h6>"+ item.addr1 + "</h6>"
-					+			"</div>"
-					+	"</div>"
-					+ 	"</a>"   
-					+ "</div>"  
-					$("#travelContents").append(infoElements)
-				})
+			if(Array.isArray(list)) {
+				if (list != undefined  || list !='' || list != null ) {
+					console.log(list)
+					$.each(list, function (i, item) {
+						var infoElements =
+							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
+						+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + " target='_blank'>"		
+						+	"<div class='thumbnail'>"
+						+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
+						+			"<div class='caption text-center'>"
+						+					"<h5>"+ item.title +"</h5>"
+						+					"<h6>"+ item.addr1 + "</h6>"
+						+			"</div>"
+						+	"</div>"
+						+ 	"</a>"   
+						+ "</div>"  
+						$("#travelContents").append(infoElements)
+					})
+				} else {
+					$(".text-right").css("display","none");
+				}
 			} else {
-				$(".text-right").css("display","none");
+				console.log(list)
+					var infoElements =
+							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
+						+   "<a href='../cmm/detail.html?id=" + list.contentid + "&item=" + list.contenttypeid + "'" + " target='_blank'>"		
+						+	"<div class='thumbnail'>"
+						+		"<img class=" + "'img-responsive'" + "src="+ "'" + list.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
+						+			"<div class='caption text-center'>"
+						+					"<h5>"+ list.title +"</h5>"
+						+					"<h6>"+ list.addr1 + "</h6>"
+						+			"</div>"
+						+	"</div>"
+						+ 	"</a>"   
+						+ "</div>"  
+						$("#travelContents").append(infoElements)
+
 			}
 		},
 
