@@ -103,24 +103,28 @@
 					<span id="festivalMonth"></span>월 현재 진행중인 축제정보
 				</h2>
 					<nav class="areaLists">
-						<div class="areaList">
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="1">서울</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="2">인천</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="3">대전</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="4">대구</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="5">광주</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="6">부산</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="7">울산</a> 
-						</div>
-						<div class="areaList">
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="31">경기도</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="32">강원도</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="35">경북</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="36">경남</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="37">전북</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="38">전남</a> 
-							<a href="javascript:void(0)" class="areaCodes" data-toggle="39">제주도</a>  
-						</div>
+						<ul class="areaList">
+							<li class="areaCodes" data-toggle="1">서울</li> 
+							<li class="areaCodes" data-toggle="2">인천</li> 
+							<li class="areaCodes" data-toggle="3">대전</li> 
+							<li class="areaCodes" data-toggle="4">대구</li> 
+							<li class="areaCodes" data-toggle="5">광주</li> 
+							<li class="areaCodes" data-toggle="6">부산</li> 
+							<li class="areaCodes" data-toggle="7">울산</li> 
+							<li class="areaCodes" data-toggle="8">세종시</li> 
+							<li class="areaCodes" data-toggle="31">경기도</li> 
+							<li class="areaCodes" data-toggle="32">강원도</li>
+							<li class="areaCodes" data-toggle="33">충북</li> 
+							<li class="areaCodes" data-toggle="34">충남</li>  
+							<li class="areaCodes" data-toggle="35">경북</li> 
+							<li class="areaCodes" data-toggle="36">경남</li> 
+							<li class="areaCodes" data-toggle="37">전북</li> 
+							<li class="areaCodes" data-toggle="38">전남</li> 
+							<li class="areaCodes" data-toggle="39">제주도</li>
+						</ul>
+						<ul class="sigunguLists">
+
+						</ul>
 					</nav>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
 				</div>
@@ -154,6 +158,8 @@
 			common.getMonth();
 			draw.areaChange();
 			draw.init();
+			draw.areaSigunguCodeGet();
+			draw.sigunguChange();
 			draw.elements();
 		})
 		var parsing = { 
@@ -161,10 +167,9 @@
 			console.log(data)
 		},
 		dataParsing: function (data) {
-			console.log(data)
 			var list = data.response.body.items.item
+			console.log(list)
 			if (list != undefined ) {
-				console.log(list)
 				$.each(list, function (i, item) {
 					var infoElements =
 						"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
@@ -183,32 +188,66 @@
 			} else {
 				$(".text-right").css("display","none");
 			}
-		}
+		},
+
+		areaDetailCodeParsing : function (data) {
+			var list = data.response.body.items.item
+			console.log(list)
+			if (list.code != 1) {
+				$.each(list, function (i, item) {
+				var sigunguDraw = 
+					"<li class='sigunguList' data-toggle="+ item.code +">"+ item.name +"</li>"
+					$(".sigunguLists").append(sigunguDraw)
+				})
+			} else {
+				var sigunguDraw = 
+					'<span>상세지역이 없습니다</span>'
+					$(".sigunguLists").append(sigunguDraw)
+			}
+		}	
 	}
 
 	var draw = {
 		elementCount : 0,
 		areaCode : 0,
+		sigunguCode : 0,
 
 		init     : function() {
 			this.elementCount = 1;
 			this.areaCode = 1;
+			this.sigunguCode = 1;
 		},
 
 		elements : function() {
 			var date = common.getDate()
-			common.getInfo('get', 'searchFestival', 'areaCode=' + this.areaCode + '&listYN=Y&MobileOS=ETC&MobileApp=AppTest&numOfRows=24&eventStartDate='+ date + '&pageNo=' + this.elementCount, parsing.dataParsing);
-			
+			common.getInfo('get', 'searchFestival', 'areaCode=' + this.areaCode + '&sigunguCode=' + this.sigunguCode + '&listYN=Y&MobileOS=ETC&MobileApp=AppTest&numOfRows=24&eventStartDate='+ date + '&pageNo=' + this.elementCount, parsing.dataParsing);
+		},
+
+		areaSigunguCodeGet : function() {
+			common.getInfo('get', 'areaCode', 'MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, parsing.areaDetailCodeParsing);
 		},
 
 		areaChange : function () {
 			that = this;
-			$(".areaCodes").click(function(){
+			$(".areaCodes").click(function() {
 				$(".text-right").css("display","block");
 				that.areaCode = $(this).attr("data-toggle");
 				$("#travelContents").empty();
 				that.elementCount = 1;
+				$(".sigunguLists").empty();
+				that.sigunguCode = 1;
+				that.areaSigunguCodeGet();
 				that.elements();
+			})
+		},
+
+		sigunguChange : function () {
+			that = this;
+			$(document).on('click', '.sigunguList', function(e) {
+				that.sigunguCode = $(this).attr("data-toggle");
+				$("#travelContents").empty();
+				that.elementCount = 1;
+				that.elements(); 
 			})
 		}
 	}

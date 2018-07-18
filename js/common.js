@@ -23,7 +23,7 @@ var common = {
     },
 
     getInfo: function (method, flag, option, returnFunction) {
-        var that = this
+        console.log(option)
         $.ajax({
             crossOrigin: true,
             type: method,
