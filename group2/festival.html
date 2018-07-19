@@ -102,39 +102,54 @@
 					<span id="festivalMonth"></span>월 현재 진행중인 축제정보
 				</h2>
 				<nav class="areaLists">
-						<span class="area">대지역</span>
+						<span class="area" style="    display: inline-block;
+						width: 100px;
+						font-size: 30px;
+						font-weight: 600;">대지역</span>
 						<span class="sigungu">시군구</span>
-					<ul class="areaList" style="display:flex; justify-content:space-between; list-style:none; padding-left: 0;z-index: 100002; visibility: hidden; background-color: white;">
-						<div id="hiddenMenu">	
+					<div class="areaList" style="display:flex; 
+												justify-content:space-between; 
+												list-style:none; 
+												padding-left: 0;
+												z-index: 100002; 
+												visibility: hidden; 
+												background-color: white;
+												position: absolute;
+												top: auto;
+												width: 100%;
+												box-shadow: 1px 1px 1px 1px; 
+												padding-top: 20px;
+												padding-bottom: 20px;">
+						<div class="hiddenMenu">	
 							<li class="areaCodes" data-toggle="1">서울</li> 
-							<li class="areaCodes" data-toggle="2">울산</li> 
-							<li class="areaCodes" data-toggle="3">경북</li> 
+							<li class="areaCodes" data-toggle="7">울산</li> 
+							<li class="areaCodes" data-toggle="35">경북</li> 
 						</div>
-						<div id="hiddenMenu">	
-							<li class="areaCodes" data-toggle="1">인천</li> 
-							<li class="areaCodes" data-toggle="2">세종시</li> 
-							<li class="areaCodes" data-toggle="3">경남</li> 
+						<div class="hiddenMenu">	
+							<li class="areaCodes" data-toggle="2">인천</li> 
+							<li class="areaCodes" data-toggle="8">세종시</li> 
+							<li class="areaCodes" data-toggle="36">경남</li> 
 						</div>
-						<div id="hiddenMenu">	
-							<li class="areaCodes" data-toggle="1">대전</li> 
-							<li class="areaCodes" data-toggle="2">경기도</li> 
-							<li class="areaCodes" data-toggle="3">전북</li> 
+						<div class="hiddenMenu">	
+							<li class="areaCodes" data-toggle="3">대전</li> 
+							<li class="areaCodes" data-toggle="31">경기도</li> 
+							<li class="areaCodes" data-toggle="37">전북</li> 
 						</div>
-						<div id="hiddenMenu">	
-							<li class="areaCodes" data-toggle="1">대구</li> 
-							<li class="areaCodes" data-toggle="2">강원도</li> 
-							<li class="areaCodes" data-toggle="3">전남</li> 
+						<div class="hiddenMenu">	
+							<li class="areaCodes" data-toggle="4">대구</li> 
+							<li class="areaCodes" data-toggle="32">강원도</li> 
+							<li class="areaCodes" data-toggle="38">전남</li> 
 						</div>
-						<div id="hiddenMenu">	
-							<li class="areaCodes" data-toggle="1">광주</li> 
-							<li class="areaCodes" data-toggle="2">충북</li> 
-							<li class="areaCodes" data-toggle="3">제주도</li> 
+						<div class="hiddenMenu">	
+							<li class="areaCodes" data-toggle="5">광주</li> 
+							<li class="areaCodes" data-toggle="33">충북</li> 
+							<li class="areaCodes" data-toggle="39">제주도</li> 
 						</div>
-						<div id="hiddenMenu">	
-							<li class="areaCodes" data-toggle="1">부산</li> 
-							<li class="areaCodes" data-toggle="2">충남</li> 
+						<div class="hiddenMenu">	
+							<li class="areaCodes" data-toggle="6">부산</li> 
+							<li class="areaCodes" data-toggle="34">충남</li> 
 						</div>
-					</ul>
+					</div>
 						<ul class="sigunguLists">
 
 						</ul>
@@ -171,15 +186,17 @@
 			common.getMonth();
 			draw.areaChange();
 			draw.init();
-			// draw.areaSigunguCodeGet(); 
-			draw.sigunguChange();
+			draw.areaSigunguCodeGet(); 
+			// draw.sigunguChange();
 			draw.elements();
-			$(".area").hover(function() {
+
+			$(".area").click(function() {
 				$(".areaList").css('visibility','visible')
-				$(".areaList").css('display','flex')
-			}, function() {
-				$(".areaList").css('visibility','hidden')
 			}) 
+
+			// $('.area').mouseout(function() { 
+			// 	$(".areaList").css('visibility','hidden')
+			//  });
 
 
 		})
@@ -189,10 +206,10 @@
 		},
 		dataParsing: function (data) {
 			var list = data.response.body.items.item
-			console.log(list)
+			// console.log(list)
 			if(Array.isArray(list)) {
 				if (list != undefined  || list !='' || list != null ) {
-					console.log(list)
+					// console.log(list)
 					$.each(list, function (i, item) {
 						var infoElements =
 							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
@@ -232,15 +249,21 @@
 
 		areaDetailCodeParsing : function (data) {
 			var list = data.response.body.items.item
-			console.log(list)
+			//console.log(list)
+			var sigunguDraw;
 			if (list.code != 1) {
 				$.each(list, function (i, item) {
-				var sigunguDraw = 
-					"<li class='sigunguList' data-toggle="+ item.code +">"+ item.name +"</li>"
+				i+=1
+				if(i % 3 === 1) {
+					console.log(i)
+					sigunguDraw =  "<li class='sigunguList' data-toggle="+ item.code +'>'+ item.name +'</li>' + "</div>"
+				} else {
+				 	sigunguDraw = "<div>" + "<li class='sigunguList' data-toggle="+ item.code +">"+ item.name +"</li>" 
+				}	
 					$(".sigunguLists").append(sigunguDraw)
 				})
 			} else {
-				var sigunguDraw = 
+				 sigunguDraw = 
 					'<span>상세지역이 없습니다</span>'
 					$(".sigunguLists").append(sigunguDraw)
 			}
@@ -253,9 +276,9 @@
 		sigunguCode : 0,
 
 		init     : function() {
-			this.elementCount = 1;
-			this.areaCode = 1;
-			this.sigunguCode = 1;
+			this.elementCount = '';
+			this.areaCode = '';
+			this.sigunguCode = '';
 		},
 
 		elements : function() {
@@ -264,7 +287,7 @@
 		},
 
 		areaSigunguCodeGet : function() {
-			common.getInfo('get', 'areaCode', 'MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, parsing.areaDetailCodeParsing);
+			common.getInfo('get', 'areaCode', 'numOfRows=50&MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, parsing.areaDetailCodeParsing);
 		},
 
 		areaChange : function () {
@@ -275,9 +298,11 @@
 				$("#travelContents").empty();
 				that.elementCount = 1;
 				$(".sigunguLists").empty();
-				that.sigunguCode = 1;
+				that.sigunguCode = '';
 				that.areaSigunguCodeGet();
 				that.elements();
+				$(".areaList").css('visibility','hidden');
+				$('.area').text($(this).context.innerHTML);
 			})
 		},
 
@@ -297,12 +322,6 @@
 		draw.elements();
 	}
 
-	function areaHoverView() {
-		$(".areaLists").hover(function() {
-			$(".areaList").css('display','flex')
-		}) 
-
-	}
 
 
 	</script>
