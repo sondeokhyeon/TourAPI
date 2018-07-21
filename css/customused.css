@@ -44,13 +44,53 @@
 				position: -webkit-sticky;
 			}
 
-			.areaList .hiddenMenu {
+			.areaLists .area__select-style {
+				display: inline-block;
+				width: 120px;
+				font-size: 30px;
+				font-weight: 600;
+			}
+
+			.hiddenMenu {
 				width:100%;
 				height: 100%;
 				text-align: center;
 				position: relative;
 
 			}
+
+			.areaLists .areaList {
+				display:flex; 
+				justify-content:space-between; 
+				list-style:none; 
+				padding-left: 0;
+				z-index: 100002; 
+				visibility: hidden; 
+				background-color: white;
+				position: absolute;
+				top: auto;
+				width: 100%;
+				box-shadow: 1px 1px 1px 1px; 
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+
+			.areaLists .sigunguLists {
+				display:flex; 
+				justify-content:space-around; 
+				list-style:none; 
+				padding-left: 0;
+				z-index: 100002; 
+				visibility: hidden; 
+				background-color: white;
+				position: absolute;
+				top: auto;
+				width: 100%;
+				box-shadow: 1px 1px 1px 1px; 
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+
 /*
 			.areaLists .areaList {
 			    padding-left: 0px;

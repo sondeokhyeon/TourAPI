@@ -104,30 +104,44 @@
 				<h2 class="animate-box" data-animate-effect="fadeInLeft">
 					숙박업소 정보
 				</h2>
-					<nav class="areaLists">
-						<ul class="areaList">
-							<li class="areaCodes" data-toggle="1">서울</li> 
-							<li class="areaCodes" data-toggle="2">인천</li> 
-							<li class="areaCodes" data-toggle="3">대전</li> 
-							<li class="areaCodes" data-toggle="4">대구</li> 
-							<li class="areaCodes" data-toggle="5">광주</li> 
-							<li class="areaCodes" data-toggle="6">부산</li> 
-							<li class="areaCodes" data-toggle="7">울산</li> 
-							<li class="areaCodes" data-toggle="8">세종시</li> 
-							<li class="areaCodes" data-toggle="31">경기도</li> 
-							<li class="areaCodes" data-toggle="32">강원도</li>
-							<li class="areaCodes" data-toggle="33">충북</li> 
-							<li class="areaCodes" data-toggle="34">충남</li>  
-							<li class="areaCodes" data-toggle="35">경북</li> 
-							<li class="areaCodes" data-toggle="36">경남</li> 
-							<li class="areaCodes" data-toggle="37">전북</li> 
-							<li class="areaCodes" data-toggle="38">전남</li> 
-							<li class="areaCodes" data-toggle="39">제주도</li>
-						</ul>
-						<div class="detailArea">
-  
-						</div>
-					</nav>
+				<nav class="areaLists">
+					<span class="area area__select-style">지역</span>
+					<span class="sigungu area__select-style">시군구</span>
+				<div class="areaList">
+					<div class="hiddenMenu">	
+						<li class="areaCodes" data-toggle="1">서울</li> 
+						<li class="areaCodes" data-toggle="7">울산</li> 
+						<li class="areaCodes" data-toggle="35">경북</li> 
+					</div>
+					<div class="hiddenMenu">	
+						<li class="areaCodes" data-toggle="2">인천</li> 
+						<li class="areaCodes" data-toggle="8">세종시</li> 
+						<li class="areaCodes" data-toggle="36">경남</li> 
+					</div>
+					<div class="hiddenMenu">	
+						<li class="areaCodes" data-toggle="3">대전</li> 
+						<li class="areaCodes" data-toggle="31">경기도</li> 
+						<li class="areaCodes" data-toggle="37">전북</li> 
+					</div>
+					<div class="hiddenMenu">	
+						<li class="areaCodes" data-toggle="4">대구</li> 
+						<li class="areaCodes" data-toggle="32">강원도</li> 
+						<li class="areaCodes" data-toggle="38">전남</li> 
+					</div>
+					<div class="hiddenMenu">	
+						<li class="areaCodes" data-toggle="5">광주</li> 
+						<li class="areaCodes" data-toggle="33">충북</li> 
+						<li class="areaCodes" data-toggle="39">제주도</li> 
+					</div>
+					<div class="hiddenMenu">	
+						<li class="areaCodes" data-toggle="6">부산</li> 
+						<li class="areaCodes" data-toggle="34">충남</li> 
+					</div>
+				</div>
+					<ul class="sigunguLists">
+						<li>지역을 먼저 선택하세요</li>
+					</ul>
+				</nav>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
 				</div>
 				<div class="text-right"><a href="javascript:void(0)" onclick="moreView()">더보기</a></div>
@@ -157,8 +171,9 @@
 	<script>
 		$(function () {
 			common.leftMenuImport();
-			draw.areaChange();
-			// common.getInfo('get', 'areaBasedList', "contentTypeId=32&areaCode=&sigunguCode=&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=12&pageNo=1", parsing.dataParsing);
+			common.areaChange();
+			common.sigunguChange();
+			common.buttonAction();
 			draw.init();
 			draw.elements();
 		})
@@ -169,60 +184,65 @@
 		},
 		dataParsing: function (data) {
 			var list = data.response.body.items.item
-			if (list != undefined ) {
-				console.log(list)
-				$.each(list, function (i, item) {
-					var InfoElements =
-						"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
-					+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + ">"		
-					+	"<div class='thumbnail'>"
-					+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
-					+			"<div class='caption text-center'>"
-					+					"<h5>"+ item.title +"</h5>"
-					+					"<h6>"+ item.addr1 + "</h6>"
-					+			"</div>"
-					+	"</div>"  
-					+	"</a>" 
-					+ "</div>"  
-					$("#travelContents").append(InfoElements)
-				})
+			if(Array.isArray(list)) {
+				if (list != undefined ) {
+					$.each(list, function (i, item) {
+						var InfoElements =
+							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
+						+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + ">"		
+						+	"<div class='thumbnail'>"
+						+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
+						+			"<div class='caption text-center'>"
+						+					"<h5>"+ item.title +"</h5>"
+						+					"<h6>"+ item.addr1 + "</h6>"
+						+			"</div>"
+						+	"</div>"  
+						+	"</a>" 
+						+ "</div>"  
+						$("#travelContents").append(InfoElements)
+					})
+				} else {
+					$(".text-right").css("display","none");
+				}
+			} else if (data.response.body.items === '') {
+					$(".text-right").css("display","none");
 			} else {
-				$(".text-right").css("display","none");
+					console.log(data)
+					var infoElements =
+							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
+						+   "<a href='../cmm/detail.html?id=" + list.contentid + "&item=" + list.contenttypeid + "'" + " target='_blank'>"		
+						+	"<div class='thumbnail'>"
+						+		"<img class=" + "'img-responsive'" + "src="+ "'" + list.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
+						+			"<div class='caption text-center'>"
+						+					"<h5>"+ list.title +"</h5>"
+						+					"<h6>"+ list.addr1 + "</h6>"
+						+			"</div>"
+						+	"</div>"
+						+ 	"</a>"   
+						+ "</div>"  
+						$("#travelContents").append(infoElements)
+
 			}
 		}
 	}
 
 	var draw = {
+
 		elementCount : 0,
 		areaCode : 0,
+		sigunguCode : 0,
 
 		init     : function() {
-			this.elementCount = 1;
-			this.areaCode = 1;
+			this.elementCount = '';
+			this.areaCode = '';
+			this.sigunguCode = '';
 		},
-
 		elements : function() {
-			console.log(this.elementCount)
-			common.getInfo('get', 'areaBasedList', 'contentTypeId=32&areaCode=' + this.areaCode + '&sigunguCode=&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=24&pageNo=' + this.elementCount , parsing.dataParsing);
+			common.getInfo('get', 'areaBasedList', 'contentTypeId=32&areaCode=' + this.areaCode + '&sigunguCode='+ this.sigunguCode +'&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=24&pageNo=' + this.elementCount , parsing.dataParsing);
 		},
-
-		areaChange : function () {
-			that = this;
-			$(".areaCodes").click(function(){
-				$(".text-right").css("display","block");
-				that.areaCode = $(this).attr("data-toggle");
-				$("#travelContents").empty();
-				that.elementCount = 1;
-				that.elements();
-			})
+		areaSigunguCodeGet : function() {
+			common.getInfo('get', 'areaCode', 'numOfRows=50&MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, common.areaDetailCodeParsing);
 		}
-	}
-
-	
-	
-	function moreView() {
-		draw.elementCount += 1;
-		draw.elements();
 	}
 
 	</script>

@@ -102,24 +102,9 @@
 					<span id="festivalMonth"></span>월 현재 진행중인 축제정보
 				</h2>
 				<nav class="areaLists">
-						<span class="area" style="    display: inline-block;
-						width: 100px;
-						font-size: 30px;
-						font-weight: 600;">대지역</span>
-						<span class="sigungu">시군구</span>
-					<div class="areaList" style="display:flex; 
-												justify-content:space-between; 
-												list-style:none; 
-												padding-left: 0;
-												z-index: 100002; 
-												visibility: hidden; 
-												background-color: white;
-												position: absolute;
-												top: auto;
-												width: 100%;
-												box-shadow: 1px 1px 1px 1px; 
-												padding-top: 20px;
-												padding-bottom: 20px;">
+						<span class="area area__select-style">지역</span>
+						<span class="sigungu area__select-style">시군구</span>
+					<div class="areaList">
 						<div class="hiddenMenu">	
 							<li class="areaCodes" data-toggle="1">서울</li> 
 							<li class="areaCodes" data-toggle="7">울산</li> 
@@ -151,7 +136,7 @@
 						</div>
 					</div>
 						<ul class="sigunguLists">
-
+							<li>지역을 먼저 선택하세요</li>
 						</ul>
 					</nav>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
@@ -184,21 +169,11 @@
 		$(function () {
 			common.leftMenuImport();
 			common.getMonth();
-			draw.areaChange();
+			common.areaChange();
+			common.sigunguChange();
+			common.buttonAction();
 			draw.init();
-			draw.areaSigunguCodeGet(); 
-			// draw.sigunguChange();
 			draw.elements();
-
-			$(".area").click(function() {
-				$(".areaList").css('visibility','visible')
-			}) 
-
-			// $('.area').mouseout(function() { 
-			// 	$(".areaList").css('visibility','hidden')
-			//  });
-
-
 		})
 		var parsing = { 
 		test:function(data) {
@@ -206,30 +181,30 @@
 		},
 		dataParsing: function (data) {
 			var list = data.response.body.items.item
-			// console.log(list)
 			if(Array.isArray(list)) {
-				if (list != undefined  || list !='' || list != null ) {
-					// console.log(list)
+				if (list != undefined ) {
 					$.each(list, function (i, item) {
-						var infoElements =
+						var InfoElements =
 							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
-						+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + " target='_blank'>"		
+						+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + ">"		
 						+	"<div class='thumbnail'>"
 						+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
 						+			"<div class='caption text-center'>"
 						+					"<h5>"+ item.title +"</h5>"
 						+					"<h6>"+ item.addr1 + "</h6>"
 						+			"</div>"
-						+	"</div>"
-						+ 	"</a>"   
+						+	"</div>"  
+						+	"</a>" 
 						+ "</div>"  
-						$("#travelContents").append(infoElements)
+						$("#travelContents").append(InfoElements)
 					})
 				} else {
 					$(".text-right").css("display","none");
 				}
+			} else if (data.response.body.items === '') {
+					$(".text-right").css("display","none");
 			} else {
-				console.log(list)
+					console.log(data)
 					var infoElements =
 							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
 						+   "<a href='../cmm/detail.html?id=" + list.contentid + "&item=" + list.contenttypeid + "'" + " target='_blank'>"		
@@ -245,32 +220,11 @@
 						$("#travelContents").append(infoElements)
 
 			}
-		},
-
-		areaDetailCodeParsing : function (data) {
-			var list = data.response.body.items.item
-			//console.log(list)
-			var sigunguDraw;
-			if (list.code != 1) {
-				$.each(list, function (i, item) {
-				i+=1
-				if(i % 3 === 1) {
-					console.log(i)
-					sigunguDraw =  "<li class='sigunguList' data-toggle="+ item.code +'>'+ item.name +'</li>' + "</div>"
-				} else {
-				 	sigunguDraw = "<div>" + "<li class='sigunguList' data-toggle="+ item.code +">"+ item.name +"</li>" 
-				}	
-					$(".sigunguLists").append(sigunguDraw)
-				})
-			} else {
-				 sigunguDraw = 
-					'<span>상세지역이 없습니다</span>'
-					$(".sigunguLists").append(sigunguDraw)
-			}
-		}	
+		}
 	}
 
 	var draw = {
+
 		elementCount : 0,
 		areaCode : 0,
 		sigunguCode : 0,
@@ -280,50 +234,14 @@
 			this.areaCode = '';
 			this.sigunguCode = '';
 		},
-
 		elements : function() {
 			var date = common.getDate()
 			common.getInfo('get', 'searchFestival', 'areaCode=' + this.areaCode + '&sigunguCode=' + this.sigunguCode + '&listYN=Y&MobileOS=ETC&MobileApp=AppTest&numOfRows=24&eventStartDate='+ date + '&pageNo=' + this.elementCount, parsing.dataParsing);
 		},
-
 		areaSigunguCodeGet : function() {
-			common.getInfo('get', 'areaCode', 'numOfRows=50&MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, parsing.areaDetailCodeParsing);
-		},
-
-		areaChange : function () {
-			that = this;
-			$(".areaCodes").click(function() {
-				$(".text-right").css("display","block");
-				that.areaCode = $(this).attr("data-toggle");
-				$("#travelContents").empty();
-				that.elementCount = 1;
-				$(".sigunguLists").empty();
-				that.sigunguCode = '';
-				that.areaSigunguCodeGet();
-				that.elements();
-				$(".areaList").css('visibility','hidden');
-				$('.area').text($(this).context.innerHTML);
-			})
-		},
-
-		sigunguChange : function () {
-			that = this;
-			$(document).on('click', '.sigunguList', function(e) {
-				that.sigunguCode = $(this).attr("data-toggle");
-				$("#travelContents").empty();
-				that.elementCount = 1;
-				that.elements(); 
-			})
+			common.getInfo('get', 'areaCode', 'numOfRows=50&MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, common.areaDetailCodeParsing);
 		}
 	}
-	
-	function moreView() {
-		draw.elementCount += 1;
-		draw.elements();
-	}
-
-
-
 	</script>
 </body>
 
