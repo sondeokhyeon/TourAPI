@@ -21,7 +21,6 @@ var common = {
     },
 
     getInfo: function (method, flag, option, returnFunction) {
-        console.log(option)
         $.ajax({
             crossOrigin: true,
             type: method,
@@ -52,7 +51,7 @@ var common = {
         },
 
         sigunguChange : function () {
-            $(document).on('click', '.sigunguList', function(e) {
+            $('.sigunguLists').on('click', 'li', function(e) {
                 draw.sigunguCode = $(this).attr("data-toggle");
                 $("#travelContents").empty();
                 draw.elementCount = 1;
@@ -67,7 +66,8 @@ var common = {
             var sigunguDraw = '';
             if (list.code != 1) {
                 $.each(list, function (i, item) {
-                    if (i === 0) {
+                    i += 1;
+                    if (i === 1) {
                         sigunguDraw +=  "<div class='hiddenMenu'>"
                                             +"<li class='sigunguList' data-toggle=''>" + '전체' +'</li>' 
                                             +"<li class='sigunguList' data-toggle="+ item.code +'>'+ item.name +'</li>'
