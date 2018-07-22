@@ -6,8 +6,9 @@
 
 참고  
 
-<a href ="http://korean.visitkorea.or.kr/kor/bz15/addOn/main/publish/index.jsp">대한민국 구석구석</a>
-<a href="https://www.data.go.kr/dataset/15000496/openapi.do">공공데이터포털 </a>
+<a href ="http://korean.visitkorea.or.kr/kor/bz15/addOn/main/publish/index.jsp">대한민국 구석구석</a>  
+<a href="https://www.data.go.kr/dataset/15000496/openapi.do">공공데이터포털 </a>  
+<a href="http://api.visitkorea.or.kr/main.do">Tour 3.0</a>  
 
 ---
 
