@@ -103,15 +103,17 @@
 					위치기반<span id="demo"></span>
 					<button class="btn btn-default" onclick="getLocation()">위치불러오기</button>
 					<div class="rangeWrap" style="margin-top: 30px;">
-						<span class="kilometer" data-toggle="1">1km</span>
-						<span class="kilometer" data-toggle="5">5km</span>
-						<span class="kilometer" data-toggle="10">10km</span>
-						<span class="kilometer" data-toggle="20">20km</span> 
+						<span class="kilometer" data-toggle="1">100m</span>
+						<span class="kilometer" data-toggle="2">300m</span>
+						<span class="kilometer" data-toggle="3">500m</span>
+						<span class="kilometer" data-toggle="4">1km</span> 
+						<span class="kilometer" data-toggle="5">3km</span> 
 					</div>
 				</h2>
 				
+				<div id="information" style="margin-top: 15%; margin-left: 5%; display: block;">
+					<h1 id="notification" style="color: #8c8b8b;">위치 불러오기를 누르시면<br>주변정보를 가져옴니다</h1></div>
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
-					<div id="information" style="margin-top: 15%; margin-left: 5%; display: block;"><h1 id="notification" style="color: #8c8b8b;">위치 불러오기를 누르시면<br>주변정보를 가져옴니다</h1></div>
 				</div>
 				<div class="text-right" id="moreViewWrap"><a href="javascript:void(0)" onclick="moreView()">더보기</a></div>
 			</div>
@@ -170,6 +172,8 @@
 					$(".text-right").css("display","none");
 				}
 			} else if (data.response.body.items === '') {
+					$('#information').css('display','block');
+					$("#notification").text('설정한 거리내에 관광정보가 없습니다.');
 					$(".text-right").css("display","none");
 			} else {
 					var infoElements =
@@ -199,13 +203,12 @@
 			this.elementCount 	= 1;
 			this.mapY		  	= 37.497891;
 			this.mapX		  	= 127.027337;
-			this.searchArrange	= 2000;
+			this.searchArrange	= 300;
 		},
 		elements : function() {
 			common.getInfo('get', 
 							'locationBasedList', 
-							'MobileOS=ETC&MobileApp=AppTest&arrange=E&numOfRows=24&pageNo=' 
-							+ this.elementCount 
+							'MobileOS=ETC&MobileApp=AppTest&arrange=E&numOfRows=24&pageNo=' + this.elementCount 
 							+'&mapY='   + this.mapY 
 							+'&mapX='   + this.mapX 
 							+'&radius=' + this.searchArrange, 
@@ -215,19 +218,23 @@
 			$('.kilometer').click(function() { 
 				var $ref = $(this).context.attributes[1].value
 				if ($ref === '1') {
+					draw.searchArrange = 100;
+					$('.kilometer').removeClass('active')
+					$(this).addClass('active');
+				} else if ($ref === '2') {
+					draw.searchArrange = 300;
+					$('.kilometer').removeClass('active')
+					$(this).addClass('active');
+				} else if ($ref === '3') {
+					draw.searchArrange = 500;
+					$('.kilometer').removeClass('active')
+					$(this).addClass('active');
+				} else if ($ref === '4') {
 					draw.searchArrange = 1000;
 					$('.kilometer').removeClass('active')
 					$(this).addClass('active');
 				} else if ($ref === '5') {
-					draw.searchArrange = 5000;
-					$('.kilometer').removeClass('active')
-					$(this).addClass('active');
-				} else if ($ref === '10') {
-					draw.searchArrange = 10000;
-					$('.kilometer').removeClass('active')
-					$(this).addClass('active');
-				} else if ($ref === '20') {
-					draw.searchArrange = 20000;
+					draw.searchArrange = 3000;
 					$('.kilometer').removeClass('active')
 					$(this).addClass('active');
 				}
@@ -235,39 +242,7 @@
 		}
 	}
 
-		function getLocation() {
-			$('#notification').text("위치정보를 가져오고 있습니다...");
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(getGeolocation, getError); 
-			} else {
-				alert('현재 사용하는 브라우저는 위치정보를 가져올수 없습니다.')
-			}
-		}
 
-		function getGeolocation(position) {
-			draw.mapY = position.coords.latitude;
-			draw.mapX = position.coords.longitude;
-			$('#moreViewWrap').css('display','block');
-			$('#information').css('display','none');
-			draw.elements();
-		}
-
-		function getError(error) {
-			switch(error.code) {
-				case error.PERMISSION_DENIED:
-					alert("위치정보 확인을 거부하였습니다.")
-					break;
-				case error.POSITION_UNAVAILABLE:
-					alert("위치정보를 사용할 수 없습니다.")
-					break;
-				case error.TIMEOUT:
-					alert("위치정보를 확인하는데 실패하였습니다.\n(TIMEOUT)")
-					break;
-				case error.UNKNOWN_ERROR:
-					alert("위치정보를 확인하는데 실패하였습니다.\n(알수없는 오류)")
-					break;
-			}
-		}
 
 		
 	
