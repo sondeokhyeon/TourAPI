@@ -65,50 +65,55 @@
 			<i></i>
 		</a>
 		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-
 			<h1 id="fh5co-logo">
 				<a href="../cmm/index.html">
 					<img src="../images/logo.png" alt="logo">
 				</a>
 			</h1>
 			<nav id="fh5co-main-menu" role="navigation">
-					<ul>
-							<a href="../cmm/index.html">Home</a></li><br><br>
-							<li data-toggle="collapse" data-target="#collapse2"><a href="#">어디로 갈까</a></li>
-							<div class="collapse in" id="collapse2" aria-expanded="true"> 
-									<ul class="nav">
-										<li><a href="../group2/tourist.html">관광지</a></li>
-										<li><a href="../group2/festival.html">축제﹒행사</a></li>
-										<li><a href="../group2/tourcourse.html">추천 여행코스</a></li>
-									</ul>
-							</div>
-							<li data-toggle="collapse" data-target="#collapse3"><a href="#">무엇을 먹을까</a></li>
-							<div class="collapse in" id="collapse3" aria-expanded="true"> 
-									<ul class="nav">
-										<li><a href="../group3/eatery.html">음식점정보</a></li>
-									</ul>
-							</div>
-							<li data-toggle="collapse" data-target="#collapse4"><a href="#">어디서 잘까</a></li>
-							<div class="collapse in" id="collapse4" aria-expanded="true"> 
-								<ul class="nav">
-									<li><a href="../group4/accommodation.html">숙박업소정보</a></li>
-								</ul>
-							</div>
-					 
-					</ul>
+				<ul>
+					<a href="../cmm/index.html">Home</a></li><br><br>
+					<li data-toggle="collapse" data-target="#collapse2"><a href="#">어디로 갈까</a></li>
+					<div class="collapse in" id="collapse2" aria-expanded="true"> 
+						<ul class="nav">
+							<li><a href="../group2/tourist.html">관광지</a></li>
+							<li><a href="../group2/festival.html">축제﹒행사</a></li>
+							<li><a href="../group2/tourcourse.html">추천 여행코스</a></li>
+						</ul>
+					</div>
+					<li data-toggle="collapse" data-target="#collapse3"><a href="#">무엇을 먹을까</a></li>
+					<div class="collapse in" id="collapse3" aria-expanded="true"> 
+						<ul class="nav">
+							<li><a href="../group3/eatery.html">음식점정보</a></li>
+						</ul>
+					</div>
+					<li data-toggle="collapse" data-target="#collapse4"><a href="#">어디서 잘까</a></li>
+					<div class="collapse in" id="collapse4" aria-expanded="true"> 
+						<ul class="nav">
+							<li><a href="../group4/accommodation.html">숙박업소정보</a></li>
+						</ul>
+					</div>
+				</ul>
 			</nav>
 		</aside>
 
 		<div id="fh5co-main">
 			<div class="fh5co-narrow-content">
 				<h2 class="animate-box" data-animate-effect="fadeInLeft">
-					위치기반<span id="demo"></span><button onclick="getLocation()">위치불러오기</button>
+					위치기반<span id="demo"></span>
+					<button class="btn btn-default" onclick="getLocation()">위치불러오기</button>
+					<div class="rangeWrap" style="margin-top: 30px;">
+						<span class="kilometer" data-toggle="1">1km</span>
+						<span class="kilometer" data-toggle="5">5km</span>
+						<span class="kilometer" data-toggle="10">10km</span>
+						<span class="kilometer" data-toggle="20">20km</span> 
+					</div>
 				</h2>
 				
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
-					<h1>위치 불러오기를 실행하세요</h1>
+					<div id="information" style="margin-top: 15%; margin-left: 5%; display: block;"><h1 id="notification" style="color: #8c8b8b;">위치 불러오기를 누르시면<br>주변정보를 가져옴니다</h1></div>
 				</div>
-				<div class="text-right"><a href="javascript:void(0)" onclick="moreView()">더보기</a></div>
+				<div class="text-right" id="moreViewWrap"><a href="javascript:void(0)" onclick="moreView()">더보기</a></div>
 			</div>
 		</div>
 	</div>
@@ -136,8 +141,8 @@
 		$(function () {
 			common.leftMenuImport();
 			draw.init();
+			draw.kilometerSet();
 		})
-
 	var parsing = { 
 		test:function(data) {
 			console.log(data)
@@ -159,7 +164,7 @@
 						+	"</div>"  
 						+	"</a>" 
 						+ "</div>"  
-						$("#travelContents").html(InfoElements)
+						$("#travelContents").append(InfoElements)
 					})
 				} else {
 					$(".text-right").css("display","none");
@@ -167,7 +172,6 @@
 			} else if (data.response.body.items === '') {
 					$(".text-right").css("display","none");
 			} else {
-					console.log(data)
 					var infoElements =
 							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
 						+   "<a href='../cmm/detail.html?id=" + list.contentid + "&item=" + list.contenttypeid + "'" + " target='_blank'>"		
@@ -180,8 +184,7 @@
 						+	"</div>"
 						+ 	"</a>"   
 						+ "</div>"  
-						$("#travelContents").html(infoElements)
-
+						$("#travelContents").append(infoElements)
 			}
 		}
 	}
@@ -198,7 +201,6 @@
 			this.mapX		  	= 127.027337;
 			this.searchArrange	= 2000;
 		},
-
 		elements : function() {
 			common.getInfo('get', 
 							'locationBasedList', 
@@ -208,20 +210,45 @@
 							+'&mapX='   + this.mapX 
 							+'&radius=' + this.searchArrange, 
 							parsing.dataParsing);
+		},
+		kilometerSet : function() {
+			$('.kilometer').click(function() { 
+				var $ref = $(this).context.attributes[1].value
+				if ($ref === '1') {
+					draw.searchArrange = 1000;
+					$('.kilometer').removeClass('active')
+					$(this).addClass('active');
+				} else if ($ref === '5') {
+					draw.searchArrange = 5000;
+					$('.kilometer').removeClass('active')
+					$(this).addClass('active');
+				} else if ($ref === '10') {
+					draw.searchArrange = 10000;
+					$('.kilometer').removeClass('active')
+					$(this).addClass('active');
+				} else if ($ref === '20') {
+					draw.searchArrange = 20000;
+					$('.kilometer').removeClass('active')
+					$(this).addClass('active');
+				}
+			}) 
 		}
 	}
 
 		function getLocation() {
+			$('#notification').text("위치정보를 가져오고 있습니다...");
 			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(setGeolocation, getError); 
+				navigator.geolocation.getCurrentPosition(getGeolocation, getError); 
 			} else {
 				alert('현재 사용하는 브라우저는 위치정보를 가져올수 없습니다.')
 			}
 		}
 
-		function setGeolocation(position) {
+		function getGeolocation(position) {
 			draw.mapY = position.coords.latitude;
 			draw.mapX = position.coords.longitude;
+			$('#moreViewWrap').css('display','block');
+			$('#information').css('display','none');
 			draw.elements();
 		}
 
@@ -241,6 +268,8 @@
 					break;
 			}
 		}
+
+		
 	
 
 

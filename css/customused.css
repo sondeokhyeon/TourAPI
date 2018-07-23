@@ -56,7 +56,6 @@
 				height: 100%;
 				text-align: center;
 				position: relative;
-
 			}
 
 			.areaLists .areaList {
@@ -74,7 +73,6 @@
 				padding-top: 20px;
 				padding-bottom: 20px;
 			}
-
 			.areaLists .sigunguLists {
 				display:flex; 
 				justify-content:space-around; 
@@ -90,52 +88,13 @@
 				padding-top: 20px;
 				padding-bottom: 20px;
 			}
-
-/*
-			.areaLists .areaList {
-			    padding-left: 0px;
-				width: 1650px;
-				border-bottom: 1px solid #b9b9b9;
-				border-top: 1px solid #b9b9b9;
-				margin-top: 1px;
-				overflow-y: scroll;
-				margin-bottom: 3px;
+			#moreViewWrap {
+				display: none;
 			}
-
-			.areaLists .areaCodes {
-				color: inherit;
-				text-align: center;
-				list-style: none;
-				float: left;
-				margin-left: 40px;
-				width : 53px;
+			.rangeWrap .active {
+				color:red;
+			}
+			.kilometer {
 				cursor: pointer;
 			}
-
-			.fh5co-nav-toggle{
-				position: fixed;
-				top: 96.8%;
-				background-color: #fff;
-				padding: 0px 0px 5px 15px;
-				width: 100%;
-				height: 100px;
-				border-top: 1px solid #a7a7a7;
-			}
-
-			.areaLists .sigunguLists {
-			    padding-left: 0px;
-				width: 1500px;
-				border-bottom: 1px solid #b9b9b9;
-				overflow-y: scroll
-			}
-
-			.sigunguLists .sigunguList {
-				color: inherit;
-				text-align: center;
-				list-style: none;
-				float: left;
-				margin-left: 41px;
-				cursor: pointer;
-			}
-			*/
 
