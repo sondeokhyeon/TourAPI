@@ -106,6 +106,7 @@
 				</h2>
 				
 				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
+					<h1>위치 불러오기를 실행하세요</h1>
 				</div>
 				<div class="text-right"><a href="javascript:void(0)" onclick="moreView()">더보기</a></div>
 			</div>
@@ -135,7 +136,6 @@
 		$(function () {
 			common.leftMenuImport();
 			draw.init();
-			draw.elements();
 		})
 
 	var parsing = { 
@@ -159,7 +159,7 @@
 						+	"</div>"  
 						+	"</a>" 
 						+ "</div>"  
-						$("#travelContents").append(InfoElements)
+						$("#travelContents").html(InfoElements)
 					})
 				} else {
 					$(".text-right").css("display","none");
@@ -180,30 +180,65 @@
 						+	"</div>"
 						+ 	"</a>"   
 						+ "</div>"  
-						$("#travelContents").append(infoElements)
+						$("#travelContents").html(infoElements)
 
 			}
 		}
 	}
 
 	var draw = {
-		elementCount : 0,
+		elementCount 	: 0,
+		mapY		 	: 0,
+		mapX		 	: 0,
+		searchArrange	: 0,
 
 		init     : function() {
-			this.elementCount = 1;
+			this.elementCount 	= 1;
+			this.mapY		  	= 37.497891;
+			this.mapX		  	= 127.027337;
+			this.searchArrange	= 2000;
 		},
+
 		elements : function() {
-			common.getInfo('get', 'locationBasedList', 'MobileOS=ETC&MobileApp=AppTest&arrange=E&numOfRows=24&pageNo=' + this.elementCount +'&mapY=37.583161&mapX=127.037855&radius=20000', parsing.dataParsing);
+			common.getInfo('get', 
+							'locationBasedList', 
+							'MobileOS=ETC&MobileApp=AppTest&arrange=E&numOfRows=24&pageNo=' 
+							+ this.elementCount 
+							+'&mapY='   + this.mapY 
+							+'&mapX='   + this.mapX 
+							+'&radius=' + this.searchArrange, 
+							parsing.dataParsing);
 		}
 	}
 
 		function getLocation() {
 			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(position) {
-					console.log(position.coords.latitude)
-				});
+				navigator.geolocation.getCurrentPosition(setGeolocation, getError); 
 			} else {
-				alert('위치정보를 가져올 수 없습니다.')
+				alert('현재 사용하는 브라우저는 위치정보를 가져올수 없습니다.')
+			}
+		}
+
+		function setGeolocation(position) {
+			draw.mapY = position.coords.latitude;
+			draw.mapX = position.coords.longitude;
+			draw.elements();
+		}
+
+		function getError(error) {
+			switch(error.code) {
+				case error.PERMISSION_DENIED:
+					alert("위치정보 확인을 거부하였습니다.")
+					break;
+				case error.POSITION_UNAVAILABLE:
+					alert("위치정보를 사용할 수 없습니다.")
+					break;
+				case error.TIMEOUT:
+					alert("위치정보를 확인하는데 실패하였습니다.\n(TIMEOUT)")
+					break;
+				case error.UNKNOWN_ERROR:
+					alert("위치정보를 확인하는데 실패하였습니다.\n(알수없는 오류)")
+					break;
 			}
 		}
 	
