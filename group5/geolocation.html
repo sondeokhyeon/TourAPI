@@ -53,13 +53,8 @@
 	<!--[if lt IE 9]>
 	<script src="../js/respond.min.js"></script>
 	<![endif]-->
-
-   
-
 </head>
-
 <body>
-
 	<div id="fh5co-page">
 		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle">
 			<i></i>
@@ -101,21 +96,26 @@
 			<div class="fh5co-narrow-content">
 				<h2 class="animate-box" data-animate-effect="fadeInLeft">
 					위치기반<span id="demo"></span>
-					<button class="btn btn-default" onclick="getLocation()">위치불러오기</button>
+					<button type="button" class="btn btn-default" onclick="getLocation()">위치불러오기</button>
+					<button type="button" class="btn btn-default showbtn" onclick="draw.daumMapDraw()" style="display:none;">현재위치보기</button>
+					<button type="button" class="btn btn-default closebtn" onclick="draw.daumMapclose()" style="display:none;">현재위치닫기</button>
 					<div class="rangeWrap" style="margin-top: 30px;">
 						<span class="kilometer" data-toggle="1">100m</span>
-						<span class="kilometer" data-toggle="2">300m</span>
+						<span class="kilometer active" data-toggle="2">300m</span>
 						<span class="kilometer" data-toggle="3">500m</span>
 						<span class="kilometer" data-toggle="4">1km</span> 
 						<span class="kilometer" data-toggle="5">3km</span> 
-					</div>
+					</div>	
 				</h2>
-				
 				<div id="information" style="margin-top: 15%; margin-left: 5%; display: block;">
 					<h1 id="notification" style="color: #8c8b8b;">위치 불러오기를 누르시면<br>주변정보를 가져옴니다</h1></div>
-				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">
+					<div>
+						<div id="map" style="width:100%; height:300px; position: absolute;"></div>
+					</div>
+				<div class="row animate-box" id="travelContents" data-animate-effect="fadeInLeft">	
+				<div class="text-right" id="moreViewWrap">
+					<a href="javascript:void(0)" onclick="moreView()">더보기</a>
 				</div>
-				<div class="text-right" id="moreViewWrap"><a href="javascript:void(0)" onclick="moreView()">더보기</a></div>
 			</div>
 		</div>
 	</div>
@@ -138,6 +138,7 @@
 	<script src="../js/main.js"></script>
 	<!-- 180510 common 추가 -->
 	<script src="../js/common.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6973ad6c8dbfd7b2b57396794ffbc5e6"></script>
 
 	<script>
 		$(function () {
@@ -154,6 +155,7 @@
 			if(Array.isArray(list)) {
 				if (list != undefined ) {
 					$.each(list, function (i, item) {
+						console.log(i)
 						var InfoElements =
 							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
 						+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + ">"		
@@ -166,7 +168,8 @@
 						+	"</div>"  
 						+	"</a>" 
 						+ "</div>"  
-						$("#travelContents").append(InfoElements)
+						$("#travelContents").append(InfoElements);
+						$('.showbtn').css('display', 'inline');
 					})
 				} else {
 					$(".text-right").css("display","none");
@@ -188,7 +191,8 @@
 						+	"</div>"
 						+ 	"</a>"   
 						+ "</div>"  
-						$("#travelContents").append(infoElements)
+						$("#travelContents").append(infoElements);
+						$('.showbtn').css('display', 'inline');
 			}
 		}
 	}
@@ -200,6 +204,7 @@
 		searchArrange	: 0,
 
 		init     : function() {
+			//$('.overlay').removeClass('overlay')
 			this.elementCount 	= 1;
 			this.mapY		  	= 37.497891;
 			this.mapX		  	= 127.027337;
@@ -239,15 +244,30 @@
 					$(this).addClass('active');
 				}
 			}) 
+		},
+
+		daumMapDraw : function() {
+			var mapContainer = document.getElementById('map'),
+			mapOption = { 
+				center: new daum.maps.LatLng(this.mapY, this.mapX), 
+				level: 3 
+			};
+			var map = new daum.maps.Map(mapContainer, mapOption);
+			var markerPosition  = new daum.maps.LatLng(this.mapY, this.mapX); 
+			var marker = new daum.maps.Marker({
+				position: markerPosition
+			});
+			marker.setMap(map);
+			$('#map').css('display','block');
+			$('.showbtn').css('display','none');
+			$('.closebtn').css('display','inline');
+		},
+			daumMapclose : function() {
+				$('#map').css('display','none');
+				$('.closebtn').css('display','none');
+				$('.showbtn').css('display','inline');
 		}
 	}
-
-
-
-		
-	
-
-
 	</script>
 </body>
 

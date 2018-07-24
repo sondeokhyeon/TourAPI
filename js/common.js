@@ -115,7 +115,6 @@ var common = {
         },
 }
 
-
 function moreView() {
     draw.elementCount += 1;
     draw.elements();
@@ -129,7 +128,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(getGeolocation, getError, {
             enableHighAccuracy:true,
             maximumAge : 0,
-            timeout : 10000
+            timeout : 50000
         }); 
     } else {
         alert('현재 사용하는 브라우저는 위치정보를 가져올수 없습니다.')
