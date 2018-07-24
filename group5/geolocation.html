@@ -96,9 +96,9 @@
 			<div class="fh5co-narrow-content">
 				<h2 class="animate-box" data-animate-effect="fadeInLeft">
 					위치기반<span id="demo"></span>
-					<button type="button" class="btn btn-default" onclick="getLocation()">위치불러오기</button>
-					<button type="button" class="btn btn-default showbtn" onclick="draw.daumMapDraw()" style="display:none;">현재위치보기</button>
-					<button type="button" class="btn btn-default closebtn" onclick="draw.daumMapclose()" style="display:none;">현재위치닫기</button>
+					<button type="button" class="btn btn-default" onclick="getLocation()" style="font-size:12px;">위치불러오기</button>
+					<button type="button" class="btn btn-default showbtn" onclick="draw.daumMapDraw()" style="display:none; font-size:12px;">현재위치보기</button>
+					<button type="button" class="btn btn-default closebtn" onclick="draw.daumMapclose()" style="display:none; font-size:12px;">현재위치닫기</button>
 					<div class="rangeWrap" style="margin-top: 30px;">
 						<span class="kilometer" data-toggle="1">100m</span>
 						<span class="kilometer active" data-toggle="2">300m</span>
@@ -178,6 +178,7 @@
 					$('#information').css('display','block');
 					$("#notification").text('설정한 거리내에 관광정보가 없습니다.');
 					$(".text-right").css("display","none");
+					$('.showbtn').css('display', 'inline');
 			} else {
 					var infoElements =
 							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
