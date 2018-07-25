@@ -57,6 +57,12 @@
 		ul .nav {
 			background-color: #e2e2e2	;
 		}
+
+		.img-responsive {
+			margin : auto;
+			width: 88% !important;
+			padding-left: 20px;
+		}
 	</style>
 
 
@@ -135,7 +141,7 @@
 				var id = $.urlParam('id');
 				var item = $.urlParam('item');
 				common.getInfo('get', 'detailCommon', "contentTypeId=" + item + "&contentId=" + id + "&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y", parsing.contentsParsing);
-				common.getInfo('get', 'detailIntro', "contentTypeId=" + item + "&contentId=" + id + "&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y", parsing.introParsing);
+				common.getInfo('get', 'detailIntro', "contentTypeId=" + item + "&contentId=" + id + "&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y", common.detailPageIntroInfoDraw);
 			})
 
 			$.urlParam = function(name){
@@ -151,7 +157,6 @@
 				contentsParsing: function (data) {
 					var InfoElements;
 					var list = data.response.body.items.item
-
 						    InfoElements =
 							  "<div class='col-md-12'>"
 							+	"<figure class='text-center'>"
@@ -213,45 +218,8 @@
 							map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
 							map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
 							marker.setMap(map);			
-				}, 
-
-				introParsing : function(data) {
-					var InfoElements;
-					var list = data.response.body.items.item
-						console.log(list.contenttypeid)
-						InfoElements = "<div class='col-md-12'>"
-							+	"<div class='col-md-12'>"
-							+		"<div class='cntBox'>"
-							+		"<ul>"
-							+			"<li><em>상세 정보</em> <p style='text-align:justify;'>" 
-							+			 list.program 
-							+			 list.sub
-							+			"</li>"							
-							+		"</ul>"
-							+		"</div>"
-							+	"</div>"
-							+ "</div>" 							
-							$("#detailIntro").append(InfoElements)
-							/* 
-							http://api.visitkorea.or.kr/openAPI/tourAPI/koreaGuide.do?menuCode=09
-							*/
 				}
-
-				
-			}
-
-	
-
+			}	
 	</script>
-
-	
-
 	</body>
 </html>
-
-
-
-<!-- 			
-
-
-	-->
