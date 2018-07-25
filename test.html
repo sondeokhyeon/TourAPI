@@ -85,23 +85,7 @@
 
 <body>
 
-	<div id="fh5co-page">
-		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle">
-			<i></i>
-		</a>
-		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-
-			<h1 id="fh5co-logo">
-				<a href="index.html">
-					<img src="images/logo.png" alt="Free HTML5 Bootstrap Website Template">
-				</a>
-			</h1>
-			<nav id="fh5co-main-menu" role="navigation">
-				
-			</nav>
-		</aside>
-
-		<div id="fh5co-main">
+	<div style="margin:50px;">
             <div class="fh5co-narrow-content">
                     <h1>전문전송 테스트 페이지</h1><br><br>
                     <input type="text" class="widthfix" id="testinput" placeholder="구분값"><br><br>
@@ -133,10 +117,6 @@
 	<script src="js/common.js"></script>
 
 	<script>
-		$(function () {
-			common.leftMenuImport();
-		})
-
         function textSubmit() {
             var temp = $('#testinput').val();
             var option = $('#options').val();

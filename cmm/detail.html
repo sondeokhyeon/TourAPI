@@ -103,6 +103,7 @@
 					
 					
 				</div>
+				<div id="detailIntro"> </div>
 			</div>
 		</div>
 	</div>
@@ -125,13 +126,16 @@
 	<script src="../js/main.js"></script>
 	<!-- 180510 common 추가 -->
 	<script src="../js/common.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6973ad6c8dbfd7b2b57396794ffbc5e6"></script>
+
 	
 	<script>
 			$(function () {
 				common.leftMenuImport();
 				var id = $.urlParam('id');
 				var item = $.urlParam('item');
-				common.getInfo('get', 'detailCommon', "contentTypeId=" + item + "&contentId=" + id + "&MobileOS=ETC&MobileApp=AppTest&&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y", parsing.dataParsing);
+				common.getInfo('get', 'detailCommon', "contentTypeId=" + item + "&contentId=" + id + "&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y", parsing.contentsParsing);
+				common.getInfo('get', 'detailIntro', "contentTypeId=" + item + "&contentId=" + id + "&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y", parsing.introParsing);
 			})
 
 			$.urlParam = function(name){
@@ -140,17 +144,18 @@
 			}
 
 			var parsing = { 
+				
 				test:function(data) {
 					console.log(data)
 				},
-				dataParsing: function (data) {
+				contentsParsing: function (data) {
+					var InfoElements;
 					var list = data.response.body.items.item
-					console.log(list)
-						var InfoElements =
-						
+
+						    InfoElements =
 							  "<div class='col-md-12'>"
 							+	"<figure class='text-center'>"
-							+		"<img src='"+ list.firstimage + "'" + "alt='이미지가 없습니다' class='img-responsive'>"
+							+ "<img src='"+  list.firstimage + "'" + "alt='이미지가 없습니다' class='img-responsive'>" 
 							+	"</figure>" 
 							+ "</div>"
 							+ "<div class='col-md-12'>"
@@ -171,16 +176,16 @@
 							+	"</figcaption>"
 
 							+	"<div class='buttonSet text-center'>"
-							+		 list.homepage 
-							// +		"<a href='#searchLoad'" + "onclick='" + fncSearchLoad('',list.mapx, list.mapy, list.title) +  "return false;' target='_blank' class='viewMap' title='새창으로 열림'>찾아오시는길</a>"
-							+	"</div>"
+							if (list.homepage != undefined ) {  InfoElements +	list.homepage }
+							InfoElements	+=	"</div>"
 
 							+	"<div class='col-md-12'>"
 							+		"<div class='cntBox'>"
 							+		"<ul>"
 							+			"<li><em>개요</em> <p style='text-align:justify;'>" 
 							+			 list.overview 
-							+			"</li>"								
+							+			"</li>"						
+							+ 			"<li><div id='map' style='width:100%; height:300px;'></div></li>"		
 							+			"<li><em>정보제공자</em>"
 							+				"<ul>"
 							+					"<li>"+ list.telname + "</li>"
@@ -193,16 +198,48 @@
 							$("#travelContents").append(InfoElements)
 
 							
-				},
+							var mapContainer = document.getElementById('map'),
+							mapOption = { 
+								center: new daum.maps.LatLng(list.mapy, list.mapx), 
+								level: 3 
+							};
+							var map = new daum.maps.Map(mapContainer, mapOption);
+							var mapTypeControl = new daum.maps.MapTypeControl(); 				// 맵 타입컨트롤러 추가 
+							var zoomControl = new daum.maps.ZoomControl();		 				// 줌 컨트롤러 추가 
+							var markerPosition  = new daum.maps.LatLng(list.mapy, list.mapx);   // 마커 position SET 
+							var marker = new daum.maps.Marker({
+								position: markerPosition
+							});
+							map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+							map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+							marker.setMap(map);			
+				}, 
+
+				introParsing : function(data) {
+					var InfoElements;
+					var list = data.response.body.items.item
+						console.log(list.contenttypeid)
+						InfoElements = "<div class='col-md-12'>"
+							+	"<div class='col-md-12'>"
+							+		"<div class='cntBox'>"
+							+		"<ul>"
+							+			"<li><em>상세 정보</em> <p style='text-align:justify;'>" 
+							+			 list.program 
+							+			 list.sub
+							+			"</li>"							
+							+		"</ul>"
+							+		"</div>"
+							+	"</div>"
+							+ "</div>" 							
+							$("#detailIntro").append(InfoElements)
+							/* 
+							http://api.visitkorea.or.kr/openAPI/tourAPI/koreaGuide.do?menuCode=09
+							*/
+				}
 
 				
 			}
 
-			function fncSearchLoad(sPosX, sPosY, sAddr, ePosX, ePosY, eAddr) {
-				var url = "http://map.naver.com/?sX="+sPosX+"&sY="+sPosY+"&sText="+sAddr+"&eX="+ePosX+"&eY="+ePosY+"&eText="+eAddr;
-				window.open(url);
-			}
-			
 	
 
 	</script>
