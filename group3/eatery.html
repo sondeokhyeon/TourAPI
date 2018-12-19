@@ -12,7 +12,7 @@
 	<title>음식점 정보</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="tourAPI 3.0 and bootstrap template make to used this page" />
-	<meta name="keywords" content="koreatravelinfo"/>
+	<meta name="keywords" content="koreatravelinfo" />
 	<meta name="author" content="sondeokhyeon" />
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -52,37 +52,8 @@
 			<i></i>
 		</a>
 		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-
-			<h1 id="fh5co-logo">
-					<a href="../cmm/index.html">
-					<img src="../images/logo.png" alt="logo">
-				</a>
-			</h1>
 			<nav id="fh5co-main-menu" role="navigation">
-					<ul>
-							<a href="../cmm/index.html">Home</a></li><br><br>
-							<li data-toggle="collapse" data-target="#collapse2"><a href="#">어디로 갈까</a></li>
-							<div class="collapse in" id="collapse2" aria-expanded="true"> 
-									<ul class="nav">
-										<li><a href="../group2/tourist.html">관광지</a></li>
-										<li><a href="../group2/festival.html">축제﹒행사</a></li>
-										<li><a href="../group2/tourcourse.html">추천 여행코스</a></li>
-									</ul>
-							</div>
-							<li data-toggle="collapse" data-target="#collapse3"><a href="#">무엇을 먹을까</a></li>
-							<div class="collapse in" id="collapse3" aria-expanded="true"> 
-									<ul class="nav">
-										<li><a href="../group3/eatery.html">음식점정보</a></li>
-									</ul>
-							</div>
-							<li data-toggle="collapse" data-target="#collapse4"><a href="#">어디서 잘까</a></li>
-							<div class="collapse in" id="collapse4" aria-expanded="true"> 
-								<ul class="nav">
-									<li><a href="../group4/accommodation.html">숙박업소정보</a></li>
-								</ul>
-							</div>
-					 
-					</ul>
+
 			</nav>
 		</aside>
 
@@ -94,37 +65,37 @@
 				<nav class="areaLists">
 					<span class="area area__select-style">지역</span>
 					<span class="sigungu area__select-style">시군구</span>
-				<div class="areaList">
-					<div class="hiddenMenu">	
-						<li class="areaCodes" data-toggle="1">서울</li> 
-						<li class="areaCodes" data-toggle="7">울산</li> 
-						<li class="areaCodes" data-toggle="35">경북</li> 
+					<div class="areaList">
+						<div class="hiddenMenu">
+							<li class="areaCodes" data-toggle="1">서울</li>
+							<li class="areaCodes" data-toggle="7">울산</li>
+							<li class="areaCodes" data-toggle="35">경북</li>
+						</div>
+						<div class="hiddenMenu">
+							<li class="areaCodes" data-toggle="2">인천</li>
+							<li class="areaCodes" data-toggle="8">세종시</li>
+							<li class="areaCodes" data-toggle="36">경남</li>
+						</div>
+						<div class="hiddenMenu">
+							<li class="areaCodes" data-toggle="3">대전</li>
+							<li class="areaCodes" data-toggle="31">경기도</li>
+							<li class="areaCodes" data-toggle="37">전북</li>
+						</div>
+						<div class="hiddenMenu">
+							<li class="areaCodes" data-toggle="4">대구</li>
+							<li class="areaCodes" data-toggle="32">강원도</li>
+							<li class="areaCodes" data-toggle="38">전남</li>
+						</div>
+						<div class="hiddenMenu">
+							<li class="areaCodes" data-toggle="5">광주</li>
+							<li class="areaCodes" data-toggle="33">충북</li>
+							<li class="areaCodes" data-toggle="39">제주도</li>
+						</div>
+						<div class="hiddenMenu">
+							<li class="areaCodes" data-toggle="6">부산</li>
+							<li class="areaCodes" data-toggle="34">충남</li>
+						</div>
 					</div>
-					<div class="hiddenMenu">	
-						<li class="areaCodes" data-toggle="2">인천</li> 
-						<li class="areaCodes" data-toggle="8">세종시</li> 
-						<li class="areaCodes" data-toggle="36">경남</li> 
-					</div>
-					<div class="hiddenMenu">	
-						<li class="areaCodes" data-toggle="3">대전</li> 
-						<li class="areaCodes" data-toggle="31">경기도</li> 
-						<li class="areaCodes" data-toggle="37">전북</li> 
-					</div>
-					<div class="hiddenMenu">	
-						<li class="areaCodes" data-toggle="4">대구</li> 
-						<li class="areaCodes" data-toggle="32">강원도</li> 
-						<li class="areaCodes" data-toggle="38">전남</li> 
-					</div>
-					<div class="hiddenMenu">	
-						<li class="areaCodes" data-toggle="5">광주</li> 
-						<li class="areaCodes" data-toggle="33">충북</li> 
-						<li class="areaCodes" data-toggle="39">제주도</li> 
-					</div>
-					<div class="hiddenMenu">	
-						<li class="areaCodes" data-toggle="6">부산</li> 
-						<li class="areaCodes" data-toggle="34">충남</li> 
-					</div>
-				</div>
 					<ul class="sigunguLists">
 						<li>지역을 먼저 선택하세요</li>
 					</ul>
@@ -165,57 +136,57 @@
 			draw.init();
 			draw.elements();
 		})
-	
-	var parsing = { 
-		test:function(data) {
-			console.log(data)
-		},
-		dataParsing: function (data) {
-			var list = data.response.body.items.item
-			if (list != undefined ) {
-				console.log(list)
-				$.each(list, function (i, item) {
-					var InfoElements =
-					"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
-					+   "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + " target='_blank'>"		
-					+	"<div class='thumbnail'>"
-					+		"<img class=" + "'img-responsive'" + "src="+ "'" + item.firstimage + "'" + "onError="  + "this.onerror=null;this.src='../images/default.png';" +  ">"
-					+			"<div class='caption text-center'>"
-					+					"<h5>"+ item.title +"</h5>"
-					+					"<h6>"+ item.addr1 + "</h6>"
-					+			"</div>"
-					+	"</div>"   
-					+	"</a>"
-					+ "</div>"  
-					$("#travelContents").append(InfoElements)
-				})
-			} else {
-				$(".text-right").css("display","none");
+
+		var parsing = {
+			test: function (data) {
+				console.log(data)
+			},
+			dataParsing: function (data) {
+				var list = data.response.body.items.item
+				if (list != undefined) {
+					console.log(list)
+					$.each(list, function (i, item) {
+						var InfoElements =
+							"<div class='col-xs-6 col-sm-6 col-md-4 col-lg-3'>"
+							+ "<a href='../cmm/detail.html?id=" + item.contentid + "&item=" + item.contenttypeid + "'" + " target='_blank'>"
+							+ "<div class='thumbnail'>"
+							+ "<img class=" + "'img-responsive'" + "src=" + "'" + item.firstimage + "'" + "onError=" + "this.onerror=null;this.src='../images/default.png';" + ">"
+							+ "<div class='caption text-center'>"
+							+ "<h5>" + item.title + "</h5>"
+							+ "<h6>" + item.addr1 + "</h6>"
+							+ "</div>"
+							+ "</div>"
+							+ "</a>"
+							+ "</div>"
+						$("#travelContents").append(InfoElements)
+					})
+				} else {
+					$(".text-right").css("display", "none");
+				}
 			}
 		}
-	}
 
-	
-	var draw = {
-		elementCount : 0,
-		areaCode : 0,
-		sigunguCode : 0,
 
-		init     : function() {
-			this.elementCount = '';
-			this.areaCode = '';
-			this.sigunguCode = '';
-		},
+		var draw = {
+			elementCount: 0,
+			areaCode: 0,
+			sigunguCode: 0,
 
-		elements : function() {
-			console.log(this.elementCount)
-			common.getInfo('get', 'areaBasedList', 'contentTypeId=39&areaCode='+ this.areaCode +'&sigunguCode='+ this.sigunguCode +'&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=24&pageNo=' + this.elementCount, parsing.dataParsing);
-		},
+			init: function () {
+				this.elementCount = '';
+				this.areaCode = '';
+				this.sigunguCode = '';
+			},
 
-		areaSigunguCodeGet : function() {
-			common.getInfo('get', 'areaCode', 'numOfRows=50&MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, common.areaDetailCodeParsing);
+			elements: function () {
+				console.log(this.elementCount)
+				common.getInfo('get', 'areaBasedList', 'contentTypeId=39&areaCode=' + this.areaCode + '&sigunguCode=' + this.sigunguCode + '&cat1=&cat2=&cat3=&listYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=A&numOfRows=24&pageNo=' + this.elementCount, parsing.dataParsing);
+			},
+
+			areaSigunguCodeGet: function () {
+				common.getInfo('get', 'areaCode', 'numOfRows=50&MobileOS=ETC&MobileApp=test&areaCode=' + this.areaCode, common.areaDetailCodeParsing);
+			}
 		}
-	}
 	</script>
 </body>
 
