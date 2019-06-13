@@ -9,11 +9,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="tourAPI 3.0 and bootstrap template make to used this page" />
 	<meta name="keywords" content="koreatravelinfo" />
 	<meta name="author" content="sondeokhyeon" />
+
+	<!-- <meta name="description" content="tourAPI 3.0 and bootstrap template make to used this page" /> -->
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+	<!-- <link rel="shortcut icon" href="favicon.ico"> -->
 
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -53,6 +54,9 @@
 		}
 	</style>
 
+	<meta property="og:type" content="website">
+	<meta property="og:image:width" content="400" />
+	<meta property="og:image:height" content="210" />
 
 </head>
 
@@ -120,11 +124,24 @@
 			},
 			contentsParsing: function (data) {
 				var InfoElements;
+				var title;
 				var list = data.response.body.items.item
+
+				document.getElementsByTagName('head')[0].innerHTML += "<meta property='og:title' content=" + list.title.replace(/(\s*)/g, "")  + ">";
+				document.getElementsByTagName('head')[0].innerHTML += "<meta property='og:description' content=" + list.title.replace(/(\s*)/g, "") + ">";
+
+				if (list.firstimage === undefined) {
+					title = window.location.href.split("/")[2].concat('/images/default.png');
+					document.getElementsByTagName('head')[0].innerHTML += "<meta property='og:image' content="+window.location.href.split("/")[0] + "//" + title + ">";
+				} else {
+					title = list.firstimage;
+					document.getElementsByTagName('head')[0].innerHTML += "<meta property='og:image' content=" + title + ">";
+				}
+
 				InfoElements =
 					"<div class='col-md-12'>"
 					+ "<figure class='text-center'>"
-					+ "<img src='" + list.firstimage + "'" + "alt='이미지가 없습니다' class='img-responsive'>"
+					+ "<img src='" + title + "'" + "alt='이미지가 없습니다' class='img-responsive'>"
 					+ "</figure>"
 					+ "</div>"
 					+ "<div class='col-md-12'>"
@@ -143,11 +160,11 @@
 					+ "</li>"
 					+ "</ul>"
 					+ "</figcaption>"
-
 					+ "<div class='buttonSet text-center'>"
-				if (list.homepage != undefined) { InfoElements + list.homepage }
-				InfoElements += "</div>"
-
+					if (list.homepage !== undefined) { 
+						InfoElements + list.homepage
+					} 
+					InfoElements += "</div>"
 					+ "<div class='col-md-12'>"
 					+ "<div class='cntBox'>"
 					+ "<ul>"
