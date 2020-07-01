@@ -24,7 +24,7 @@ var common = {
 		$.ajax({
 			crossOrigin: true,
 			type: method,
-			url: "https://api.visitkorea.or.kr/openapi/service/rest/KorService/" + flag,
+			url: "http://api.visitkorea.or.kr/openapi/service/rest/KorService/" + flag,
 			data: "ServiceKey=%2B6kreK3SlK%2FHeXSglkdHXVcOjgM%2BHoHwQK%2BbDXAlMNTwbkNSgJXPlywyo7CO1ntAZ5CDfYU4xFI1p%2F9TJ3fbFw%3D%3D&" + option + "&_type=json",
 			dataType: "json",
 			success: function (data) {
